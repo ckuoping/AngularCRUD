@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class ApiService {
 
+  // check API command json-server --watch db.json
+
   constructor( private http: HttpClient ) { }
 
   postProduct(data:any){

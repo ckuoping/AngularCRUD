@@ -11,9 +11,9 @@
     },
     {
       "productName": "Carrot",
-      "category": "vegetables",
+      "category": "electronics",
       "freshness": "Refurinshed",
-      "price": 450,
+      "price": 200,
       "comment": "The type of vegetables that I don't like",
       "date": "2022-05-19T16:00:00.000Z",
       "id": 2

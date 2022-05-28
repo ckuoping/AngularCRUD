@@ -13,7 +13,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class AppComponent implements OnInit {
   title = 'AngularCRUD';
-  displayedColumns: string[] = ['productName', 'category','date', 'freshness', 'price','comment'];
+  displayedColumns: string[] = ['productName', 'category','date', 'freshness', 'price','comment','action'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -27,6 +27,10 @@ constructor(public dialog: MatDialog,private api: ApiService) {}
     this.dialog.open(DialogComponent, {
       width:'30%',
 
+    }).afterClosed().subscribe(val=>{
+      if(val=='save'){
+        this.getAllProducts()
+      }
     });
   }
 
@@ -37,10 +41,34 @@ constructor(public dialog: MatDialog,private api: ApiService) {}
         this.dataSource =  new MatTableDataSource(res)
         this.dataSource.paginator = this.paginator
         this.dataSource.sort = this.sort
-        console.log(res)
+        // console.log(res)
       },
       error:(err)=>{
         console.log('errors while fetching data')
+      }
+    })
+  }
+
+  editProduct(row:any){
+    this.dialog.open(DialogComponent,{
+      width:'30%',
+      data:row
+    }).afterClosed().subscribe(val=>{
+      if(val=='update'){
+        this.getAllProducts()
+      }
+    });
+  }
+
+  deleteProduct(id:number){
+    this.api.deleteProduct(id)
+    .subscribe({
+      next:(res)=>{
+        alert('delete sucessfully')
+        this.getAllProducts()
+      },
+      error:(err)=>{
+        alert('delete unsuccessfully')
       }
     })
   }
